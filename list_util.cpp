@@ -21,3 +21,5 @@ float conv(conv_len Us, conv_len Ud, float val)
 {
     return val/Us.mult * Ud.mult;
 }
+
+float v;
