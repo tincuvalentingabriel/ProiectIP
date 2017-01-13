@@ -20,12 +20,10 @@ int main(int argc, char *argv[])
     cd->addItem("viteza");
     cd->addItem("temperatura");
     cd->addItem("masa");
+    cd->addItem("energie");
+    cd->addItem("presiune");
+    cd->addItem("densitate");
 
 
-
-
-
-
-
-      return a.exec();
+    return a.exec();
 }

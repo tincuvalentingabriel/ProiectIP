@@ -1,5 +1,5 @@
 #include "list_util.h"
-void Inserare(Lista *Prim, QString s, int x)
+void Inserare(Lista *Prim, QString s, double x)
 {
     Lista *q;
     if (Prim->ultim==nullptr)
@@ -17,9 +17,22 @@ void Inserare(Lista *Prim, QString s, int x)
     q->ultim=nullptr;
      Prim->ultim=q;
 }
-float conv(conv_len Us, conv_len Ud, float val)
+
+double cautare (Lista* L, QString x )
 {
-    return val/Us.mult * Ud.mult;
+    Lista* p = L;
+    while (p!=nullptr)
+    {
+        if (p->nume == x)
+        {
+            return p->valoare;
+        }
+        p=p->urm;
+    }
+    return 0;
 }
 
-float v;
+double conv(double Us, double Ud, double val)
+{
+    return val/Us * Ud;
+}

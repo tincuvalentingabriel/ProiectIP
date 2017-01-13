@@ -4,21 +4,21 @@
 
 struct Lista {
     QString nume;
-    int valoare;
+    double valoare;
     Lista *urm;
     Lista *ultim;
 };
 
-void Inserare(Lista *Prim, QString s, int x);
+void Inserare(Lista *Prim, QString s, double x);
 
-
+double cautare (Lista*, QString);
 
 struct conv_len
 {
     QString name;
-    float mult;
+    double mult;
 };
 
-float conv(conv_len Us, conv_len Ud, float val);
+double conv(double Us, double Ud, double val);
 
 #endif // LIST_UTIL_H

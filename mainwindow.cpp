@@ -66,6 +66,32 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWin
         Inserare (weight_items, h[i].name, h[i].mult);
     }
 
+    conv_len k[] = {{"cal", 0.238845}, {"kcal", 0.0002388}, {"kJ",0.001}, {"W*h", 0.00027777777}, {"W*s", 1}, {"J", 1}};
+    energy_items = new Lista;
+    energy_items->ultim = nullptr;
+    for(int i=0;i<6;i++)
+    {
+        Inserare(energy_items,k[i].name, k[i].mult );
+    }
+
+    conv_len l[] = {{"at", 0.999321888}, {"atm", 0.9671821878}, {"in.H2O", 393.8273589}, {"inHg", 28.939387}, {"mH20", 10}, {"mmH20", 10000}, {"mmHg", 735.06044}, {"MPa", 0.098}, {"Pa", 98000}, {"bar", 1} };
+    pressure_items = new Lista;
+    pressure_items->ultim= nullptr;
+    for (int i=0;i<10;i++)
+    {
+        Inserare (pressure_items, l[i].name, l[i].mult);
+    }
+
+    conv_len m[] = {{"g/l", 1000}, {"g/m^3", 1000000}, {"g/ml", 1},{"g/mm^3", 0.001}, {"kg/cm^3", 0.001}, {"kg/l", 1},{"kg/m^3", 1000}, {"mg/cm^3", 1000}, {"mg/l", 1000000}, {"mg/m^3", 1000000000}, {"t/m^3", 1}, {"g/cm^3", 1}};
+    density_items = new Lista;
+    density_items->ultim = nullptr;
+    for(int i=0; i<12; i++)
+    {
+        Inserare(density_items, m[i].name, m[i].mult);
+    }
+
+    ui->result->setReadOnly(true);
+
 }
 
 MainWindow::~MainWindow()
@@ -73,97 +99,79 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::update_items()
+{
+    ui->unit_1->clear();
+    ui->unit_2->clear();
+
+    Lista *p=this->items;
+    while (p)
+    {
+        ui->unit_1->addItem(p->nume);
+        ui->unit_2->addItem(p->nume);
+        p=p->urm;
+    }
+}
 
 void MainWindow::SelectionUnit(QString index)
 {
     if (index == "lungime")
     {
-
-        ui->unit_1->clear();
-        ui->unit_2->clear();
-        Lista *p=length_items;
-        while(p)
-        {
-             ui->unit_1->addItem(p->nume);
-             ui->unit_2->addItem(p->nume);
-             p=p->urm;
-        }
-
-
+       this->items = length_items;
     }
-    if (index=="arie")
+    else  if (index=="arie")
     {
-        ui->unit_1->clear();
-        ui->unit_2->clear();
-        Lista *p=area_items;
-        while(p)
-        {
-            ui->unit_1->addItem(p->nume);
-            ui->unit_2->addItem(p->nume);
-            p=p->urm;
-        }
+       this->items = area_items;
     }
-    if (index == "volum")
+    else  if (index == "volum")
     {
-        ui->unit_1->clear();
-        ui->unit_2->clear();
-        Lista *p=volume_items;
-        while(p)
-        {
-            ui->unit_1->addItem(p->nume);
-            ui->unit_2->addItem(p->nume);
-            p=p->urm;
-        }
+       this->items = volume_items;
     }
-    if (index == "timp")
+    else if (index == "timp")
     {
-        ui->unit_1->clear();
-        ui->unit_2->clear();
-        Lista *p = time_items;
-        while (p)
-        {
-            ui->unit_1->addItem(p->nume);
-            ui->unit_2->addItem(p->nume);
-            p=p->urm;
-        }
+       this->items = time_items;
     }
-    if (index == "viteza")
+    else if (index == "viteza")
     {
-        ui->unit_1->clear();
-        ui->unit_2->clear();
-        Lista *p = speed_items;
-        while (p)
-        {
-            ui->unit_1->addItem(p->nume);
-            ui->unit_2->addItem(p->nume);
-            p=p->urm;
-        }
+       this->items = speed_items;
     }
-    if (index == "temperatura")
+    else if (index == "temperatura")
     {
-        ui->unit_1->clear();
-        ui->unit_2->clear();
-        Lista *p = temperature_items;
-        while (p)
-        {
-            ui->unit_1->addItem(p->nume);
-            ui->unit_2->addItem(p->nume);
-            p=p->urm;
-        }
+       this->items = temperature_items;
     }
-    if (index=="masa")
+    else if (index=="masa")
     {
-        ui->unit_1->clear();
-        ui->unit_2->clear();
-        Lista *p = weight_items;
-        while (p)
-        {
-            ui->unit_1->addItem(p->nume);
-            ui->unit_2->addItem(p->nume);
-            p=p->urm;
-        }
+        this->items = weight_items;
+    }
+    else if (index == "energie")
+    {
+        this->items = energy_items;
+    }
+    else if (index =="presiune")
+    {
+        this->items = pressure_items;
+    }
+    else if (index =="densitate")
+    {
+        this->items = density_items;
     }
 
+    this->update_items();
+}
+
+void MainWindow::Transform()
+{
+    double from_valoare = cautare(this->items, ui->unit_1->currentText());
+    double to_valoare = cautare(this->items, ui->unit_2->currentText());
+    double conv_value = ui->value->text().toDouble();
+
+    ui->result->setText(QString::number(conv(from_valoare, to_valoare, conv_value)));
+}
+
+void MainWindow::Reset()
+{
+    ui->value->setText("");
+    ui->result->setText("");
 }
 
 

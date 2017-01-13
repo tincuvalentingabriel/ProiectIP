@@ -18,6 +18,8 @@ public:
 
 public slots:
     void SelectionUnit(QString);
+    void Transform();
+    void Reset();
 
 private:
     Ui::MainWindow *ui;
@@ -28,6 +30,14 @@ private:
     Lista *speed_items;
     Lista *temperature_items;
     Lista *weight_items;
+    Lista *energy_items;
+    Lista *pressure_items;
+    Lista *density_items;
+    Lista *items;
+
+private:
+    void update_items();
+
 };
 
 #endif // MAINWINDOW_H
