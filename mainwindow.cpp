@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWin
     length_items = new Lista;
     length_items->ultim = nullptr;
 
-    for (int i = 0; i<9; i++)
+    for (int i = 0; i<10; i++)
     {
     Inserare(length_items , b[i].name, b[i].mult);
     }
@@ -58,10 +58,10 @@ MainWindow::MainWindow(QWidget *parent) :QMainWindow(parent), ui(new Ui::MainWin
         Inserare(temperature_items, g[i].name, g[i].mult);
     }
 
-    conv_len h[] = {{"kg", 0.001}, {"mg", 1000.000}, {"t", 0.000001}, {"g", 1}};
+    conv_len h[] = {{"kg", 0.001}, {"mg", 1000.000}, {"t", 0.000001}, {"g", 1}, {"lb", 0.00220}};
     weight_items = new Lista;
     weight_items->ultim = nullptr;
-    for(int i=0; i<4; i++)
+    for(int i=0; i<5; i++)
     {
         Inserare (weight_items, h[i].name, h[i].mult);
     }
